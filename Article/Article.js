@@ -85,6 +85,22 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'What is the purpose of THIS!?',
+    date: 'Oct 3rd, 2019',
+    firstParagraph: `Hodor hodor HODOR! Hodor hodor - hodor, hodor. Hodor hodor... Hodor hodor hodor; hodor hodor. Hodor hodor hodor, hodor, hodor
+          hodor. Hodor, hodor. Hodor. Hodor, hodor - hodor... Hodor hodor hodor; hodor HODOR hodor, hodor hodor?! Hodor hodor, hodor.
+          Hodor hodor hodor hodor hodor! Hodor hodor - HODOR hodor, hodor hodor hodor hodor hodor; hodor hodor? `,
+
+    secondParagraph: `Hodor, hodor. Hodor. Hodor, hodor, hodor. Hodor hodor, hodor. Hodor hodor, hodor, hodor hodor. Hodor! Hodor hodor, hodor;
+          hodor hodor hodor? Hodor, hodor. Hodor. Hodor, hodor - HODOR hodor, hodor hodor hodor! Hodor, hodor. Hodor. Hodor, HODOR
+          hodor, hodor hodor, hodor, hodor hodor. Hodor hodor - hodor - hodor... Hodor hodor hodor hodor hodor hodor hodor?! Hodor
+          hodor - hodor hodor hodor. Hodor. Hodor hodor... Hodor hodor hodor hodor hodor? `,
+
+    thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
+          Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
+          Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
   }
 ];
 
@@ -103,6 +119,7 @@ const data = [
 
   Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
 
+
   Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
 
   Step 3: return the entire component.
@@ -112,3 +129,80 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+
+{/* articles wraps all of this in a div
+  <div class="article">
+    <h2>{title of the article}</h2>
+    <p class="date">{date of the article}</p>
+    p{three separate paragraph elements}
+    p
+    p
+    <span class='expandButton'></span>
+  </div> */}
+
+
+const articles = document.querySelector(".articles");
+
+function createArticle(title,date,firstParagraph,secondParagraph, thirdParagraph){
+
+  const article = document.createElement('div')
+  const articleTitle = document.createElement('h2');
+  const writtenDate = document.createElement('p');
+  const paragraph1 = document.createElement('p');
+  const paragraph2 = document.createElement('p');
+  const paragraph3 = document.createElement('p');
+  const expandButton = document.createElement('span');
+  const openButton = document.createElement('button')
+  const closeButton = document.createElement('button')
+
+//append children 
+ article.appendChild(articleTitle);
+ article.appendChild(writtenDate);
+ article.appendChild(paragraph1);
+ article.appendChild(paragraph2);
+ article.appendChild(paragraph3);
+ article.appendChild(expandButton);
+ expandButton.appendChild(openButton);
+ expandButton.appendChild(closeButton);
+
+ //set Class names 
+ article.classList.add('article');
+ writtenDate.classList.add('date');
+ expandButton.classList.add('expandButton');
+ openButton.classList.add('article-btn-open');
+ closeButton.classList.add('article-btn-close','hide-btn');
+ 
+
+ //set text Content
+ openButton.textContent = '\u25bc';
+ closeButton.textContent = '\u25b2'
+
+// expandButton.textContent = 'Expand Article';
+ articleTitle.textContent = title;
+ writtenDate.textContent = date;
+ paragraph1.textContent = firstParagraph;
+ paragraph2.textContent = secondParagraph;
+ paragraph3.textContent = thirdParagraph;
+ 
+
+ //add Event Listener
+ expandButton.addEventListener('click',(e)=>{
+  console.log('button clicked', e.target);
+
+  //toggle open and close
+  openButton.classList.toggle('hide-btn');
+  closeButton.classList.toggle('hide-btn');
+  // expandButton.classList.toggle('hide-btn');
+
+  article.classList.toggle('article-open');
+ })
+
+
+//  console.log(article);
+ return article
+ 
+}
+
+data.forEach(cnt =>{
+  articles.appendChild(createArticle(cnt.title,cnt.date,cnt.firstParagraph,cnt.secondParagraph,cnt.thirdParagraph))
+})
